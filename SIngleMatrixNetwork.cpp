@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 //	Network ted(3,10,2,"blank_network.txt");
 
 //	Network fred;
-	Network fred("antJaw_02.txt");
+	Network fred("antJaw_05.txt");
 
 	fred.PrintNetworkState();
 
@@ -35,17 +35,16 @@ int main(int argc, char* argv[])
 	fred.setNetworkWeightsDiagonalRange(1,0,8);
 */
 
-	fred.writeNetworkOutputStateToFile( "testOutput3.txt" );
+	fred.writeNetworkOutputStateToFile( "testOutput10.txt" );
 
 	i = 0;
 	while( i < 1000 ){
 
 		
 		input[0] = input[1] = input[2]	= 0.0;			// Set all inputs off
-		//if( i>25 && i < 100)	input[0] = 1.0;		// Command jaw close on between time 25 and 100
-		if( i>000 && i < 600)	input[0] = 1.0;		// Command jaw close	on between time = 300 and 600
-		if( i> 400 && i < 600) input[1] = 1.0;		// command right jaw open between time = 400 and 600
-		if( i> 400 && i < 600) input[2] = 1.0;		// command left jaw open between time = 400 and 600
+		if( i> 300 && i < 700)	input[0] = 1.0;		// Command jaw close 
+		if( i> 600 && i < 800) input[1] = 1.0;		// command LEFT jaw open
+		if( i> 650 && i < 850) input[2] = 1.0;		// command RIGHT jaw open
 		// Vary duration of command 
 		// Get offset to work - correct resting state
 		// close and then sensory input
@@ -70,7 +69,7 @@ int main(int argc, char* argv[])
 //		fred.printNetworkOuput();
 		fred.printNetworkOutputState( );
 
-		fred.writeNetworkOutputStateToFile( "testOutput3.txt" );
+		fred.writeNetworkOutputStateToFile( "testOutput10.txt" );
 
 //		fred.writeNetworkToFile("test.txt");
 	//	fred.writeNetworkWeightsToFile("weights.txt");
