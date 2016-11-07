@@ -72,7 +72,7 @@ Network::~Network()
 }
 
 
-void Network::instantiateDefaultNetwork( )
+void Network::instantiateDefaultNetwork( void )
 {
 	numberOfInputs = 2 ;
 	numberOfOutputs = 2;
@@ -96,7 +96,7 @@ void Network::instantiateDefaultNetwork( )
   Print network state
 
   */
-void Network::PrintNetworkState( )
+void Network::PrintNetworkState( void )
 {
 	printf(" Number of inputs: %d\n",numberOfInputs);
 	printf(" Number of outputs: %d\n",numberOfOutputs);
@@ -112,7 +112,7 @@ void Network::PrintNetworkState( )
   It treates autapses and inputs specially so it is not strictly speaking pure matrix mathematics
   */
 
-void Network::networkActivation( )
+void Network::networkActivation( void  )
 {
 	int neuron_number, source_neuron_number, k;
 
@@ -175,7 +175,7 @@ void Network::setNetworkInput( double *vector)
 
 */
 
-void Network::copyNetworkInputsToInputNeuronOutputs( )
+void Network::copyNetworkInputsToInputNeuronOutputs( void )
 {
 	int i;
 	
@@ -198,7 +198,7 @@ void Network::copyNetworkInputsToInputNeuronOutputs( )
 
 */
 
-void Network::setNetworkOuput( )
+void Network::setNetworkOuput( void )
 {
 	int i;
 	
@@ -221,7 +221,7 @@ void Network::setNetworkOuput( )
 
 //Network::setNetworkNeuronOutput( void )
 
-void Network::copyNeuronActivationsToNeuronOutputs( )
+void Network::copyNeuronActivationsToNeuronOutputs( void )
 {
 	int i;
 	
@@ -241,10 +241,11 @@ void Network::copyNeuronActivationsToNeuronOutputs( )
 
 */
 
-void Network::thresholdNeuronOutputs( )
+void Network::thresholdNeuronOutputs( void )
 {
 	int i;
 	
+
 	for(i = 0; i < networkDimension; ++i){
 		if(neuronActivation[i] > neuronThresholds[i]){
 			neuronOutput[i] = neuronActivation[i] - neuronThresholds[i];
@@ -570,6 +571,23 @@ void Network::setNetworkOutputs( double value )
 
 }
 
+/* --------------------------------------------------
+
+setNetworkOutputs
+
+
+*/
+void Network::7777squashNetworkOutputs(double value, double max, double slope, double xOffSet)
+{
+	int i;
+
+	for (i = 0; i< numberOfOutputs; ++i) {
+		networkOutputs[i] = 1/(1+exp(-value));
+	}
+
+
+}
+
 
 /* --------------------------------------------------
 
@@ -579,7 +597,7 @@ void Network::setNetworkOutputs( double value )
 
  
 */
-void Network::printNetworkOuput( )
+void Network::printNetworkOuput( void )
 {
 	int i;
 	
@@ -603,7 +621,7 @@ void Network::printNetworkOuput( )
 		information.
  
 */
-void Network::cycleNetwork( )
+void Network::cycleNetwork( void )
 {
 
 	networkActivation( );						// perform adjusted matrix multiplication of the weights and current network state
@@ -614,7 +632,7 @@ void Network::cycleNetwork( )
 
 }
 
-void Network::cycleNetworkNormalizeHebbianLearning( )
+void Network::cycleNetworkNormalizeHebbianLearning( void )
 {
 /* *+*  */
 	hebbianExcitatoryWeightUpdate( );
@@ -633,7 +651,7 @@ void Network::cycleNetworkNormalizeHebbianLearning( )
   Some form of normalization or negative weights need to be used to offset this unbounded weight growth if the network is to be stable
 
   */
-void Network::hebbianWeightUpdate( )
+void Network::hebbianWeightUpdate( void  )
 {
 	int source_neuron_number, target_neuron_number, weight_index;
 	double weight_increment;
@@ -664,7 +682,7 @@ void Network::hebbianWeightUpdate( )
   Some form of normalization or negative weights need to be used to offset this unbounded weight growth if the network is to be stable
 
   */
-void Network::hebbianExcitatoryWeightUpdate( )
+void Network::hebbianExcitatoryWeightUpdate( void )
 {
 	int source_neuron_number, target_neuron_number, weight_index;
 	double weight_increment;
@@ -701,7 +719,7 @@ void Network::hebbianExcitatoryWeightUpdate( )
   Some form of normalization or negative weights need to be used to offset this unbounded weight growth if the network is to be stable
 
   */
-void Network::hebbianInhibitoryWeightUpdate( )
+void Network::hebbianInhibitoryWeightUpdate( void )
 {
 	int source_neuron_number, target_neuron_number, weight_index;
 	double weight_increment;
@@ -763,7 +781,7 @@ void Network::normalizeNeuronWeights( double value )
 	This function use the sum of the absolute value of each weight to determine the normalization value. (Negative weights are inverted in sign before they are summed).
 
   */
-void Network::normalizeNeuronWeights( )
+void Network::normalizeNeuronWeights( void )
 {
 	int source_neuron_number, target_neuron_number, weight_index;
 	double weight_sum;
@@ -794,7 +812,7 @@ void Network::normalizeNeuronWeights( )
 
 
   */ 
-void Network::normalizeNonDiagonalNeuronWeights( )
+void Network::normalizeNonDiagonalNeuronWeights( void )
 {
 	int source_neuron_number, target_neuron_number, weight_index;
 	double weight_sum;
@@ -829,7 +847,7 @@ void Network::normalizeNonDiagonalNeuronWeights( )
 
 
   */ 
-void Network::normalizeNonDiagonalExcitatoryNeuronWeights( )
+void Network::normalizeNonDiagonalExcitatoryNeuronWeights( void )
 {
 	int source_neuron_number, target_neuron_number, weight_index;
 	double weight_sum;
@@ -863,7 +881,7 @@ void Network::normalizeNonDiagonalExcitatoryNeuronWeights( )
 
 
   */ 
-void Network::normalizeNonDiagonalInhibitoryNeuronWeights( )
+void Network::normalizeNonDiagonalInhibitoryNeuronWeights( void )
 {
 
 	int source_neuron_number, target_neuron_number, weight_index;
@@ -1125,7 +1143,7 @@ writeNetworkOutputToFile
    changes to this should be mirrored in readNetworkFromFile
 
 */
-void Network::printNetworkOutputState( )
+void Network::printNetworkOutputState( void )
 {
 	int i;
 
