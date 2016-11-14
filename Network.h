@@ -44,11 +44,11 @@ private:
 
 	// Functions -------------------------
 
-	void Network::instantiateDefaultNetwork( );
-	void Network::setNetworkOuput( );
-	void Network::copyNeuronActivationsToNeuronOutputs( );
-	void Network::copyNetworkInputsToInputNeuronOutputs( );
-	void Network::thresholdNeuronOutputs( );
+	void Network::instantiateDefaultNetwork( void );
+	void Network::setNetworkOuput( void );
+	void Network::copyNeuronActivationsToNeuronOutputs( void );
+	void Network::copyNetworkInputsToInputNeuronOutputs( void );
+	void Network::thresholdNeuronOutputs( void );
 	void Network::setNeuronOutput( double value );
 	void Network::setNeuronThresholds( double value );
 	void Network::setNeuronLearningRate( double value );
@@ -56,23 +56,25 @@ private:
 	void Network::setPlasticWeightsMask( short int value ); // in general it is good to set this to 1 and let the learning rate determine plasticity.  This is to be used for special cases
 	void Network::setNeuronActivation( double value );
 	void Network::setNetworkOutputs( double value );
-	void Network::networkActivation( );
-	void Network::hebbianWeightUpdate( );
-	void Network::hebbianExcitatoryWeightUpdate( );
-	void Network::hebbianInhibitoryWeightUpdate( );
-	void Network::normalizeNeuronWeights( );			// Update weight totals to neuron-specific values
+	void Network::networkActivation( void  );//typed by cl 10/24
+	void Network::hebbianWeightUpdate( void  ); //typed by cl 10/24
+	void Network::hebbianExcitatoryWeightUpdate( void );
+	void Network::hebbianInhibitoryWeightUpdate( void );
+	void Network::normalizeNeuronWeights( void );			// Update weight totals to neuron-specific values
 	void Network::normalizeNeuronWeights( double value );	// Uptdate weight totals to specificed values
-	void Network::normalizeNonDiagonalNeuronWeights( );
-	void Network::normalizeNonDiagonalInhibitoryNeuronWeights( );
-	void Network::normalizeNonDiagonalExcitatoryNeuronWeights( );
+	void Network::normalizeNonDiagonalNeuronWeights( void );
+	void Network::normalizeNonDiagonalInhibitoryNeuronWeights( void );
+	void Network::normalizeNonDiagonalExcitatoryNeuronWeights( void );
 	void Network::setNeuronWeightTotal( double value);
 	int Network::computeWeightIndex( int source_neuron_number, int target_neuron_number );
+	double Network::squashNeuronOutput(double value, double max, double slope, double offset);
+	void Network::squashNetworkOutput(void);
 
 public:
-	void Network::cycleNetwork( );
-	void Network::cycleNetworkNormalizeHebbianLearning( );
-	void Network::printNetworkOuput( );
-	void Network::printNetworkOutputState( );
+	void Network::cycleNetwork( void );
+	void Network::cycleNetworkNormalizeHebbianLearning( void );
+	void Network::printNetworkOuput( void );
+	void Network::printNetworkOutputState( void );
 	void Network::setNetworkWeightsDiagonalRange( double value, int start_row_col, int end_row_col );
 	void Network::setNetworkWeightsUpperLowerTriangleAndDiagonal( double diagonal_value, double upper_triangle_value, double lower_triangle_value);
 	void Network::setNetworkWeightsRectangle( double value, int start_row, int end_row, int start_column, int end_column );
@@ -86,7 +88,7 @@ public:
 	int Network::readNetworkFromFile( char * file_name );
 	int Network::writeNetworkToFile( char * file_name );
 	void Network::setNetworkWeights( double value );
-	void Network::PrintNetworkState( );
+	void Network::PrintNetworkState( void );
 
 };
 

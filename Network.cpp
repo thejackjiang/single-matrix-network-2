@@ -4,6 +4,7 @@
 
 #include "stdafx.h"
 #include "Network.h"
+#include "Math.h";
 #include <stdio.h>
 
 //////////////////////////////////////////////////////////////////////
@@ -573,19 +574,26 @@ void Network::setNetworkOutputs( double value )
 
 /* --------------------------------------------------
 
-setNetworkOutputs
+squashNeuronOutput
+Function to apply the scale logistic funtion to a double value
+Unscale version have the value 
+max = 1.0, slope = 1.0, offset = 0
 
+Scaling of the neuron output with the squashing function 
+	max sets the maximum value of the neuron output (min value should be 0)
+	slope maps the a wide output range with low slope and a narrow output range with large slope
+	offset shifts the input on the x axis
 
+Last revised: 11/07/16 CL, IT, ZC, JJ, FG
 */
-void Network::7777squashNetworkOutputs(double value, double max, double slope, double xOffSet)
+double Network::squashNeuronOutput(double value, double max, double slope, double offset)
 {
-	int i;
+	
+	double result;
+	
+	result = max/(1+exp(-value * slope + offset));	
 
-	for (i = 0; i< numberOfOutputs; ++i) {
-		networkOutputs[i] = 1/(1+exp(-value));
-	}
-
-
+	return (result);
 }
 
 
@@ -627,8 +635,33 @@ void Network::cycleNetwork( void )
 	networkActivation( );						// perform adjusted matrix multiplication of the weights and current network state
 //	setNetworkNeuronOutput( );					// Transform activations into outputs and copy 
 	copyNeuronActivationsToNeuronOutputs( );
-	thresholdNeuronOutputs( );					// Transform activations into outputs following hard threshold
+//	thresholdNeuronOutputs( );					// Transform activations into outputs following hard threshold
+	squashNetworkOutput( );
 	setNetworkOuput( );							// Copy the network output to the output array *+* consider moving this call out of the function to allow network "settling time" before external functions have access to the network output
+
+}
+
+/* --------------------------------------------------
+
+cycleNetwork
+
+a function meant to supply the network outputs to outside process
+
+
+Notes:
+1. Inputs  should be set separately. This routine does not make use of external input. It uses the current neuron outputs into inputs.
+The network inputs must be set before calling this routine to get the network to respond to new input
+information.
+
+*/
+void Network::squashNetworkOutput(void)
+{
+	int i;
+	for (i = 0; i < networkDimension; ++i) {
+		networkOutputs[i] = squashNeuronOutput(networkOutputs[i], 1.0, 1.0, 0.0);
+	}
+																				
+	setNetworkOuput();							// Copy the network output to the output array *+* consider moving this call out of the function to allow network "settling time" before external functions have access to the network output
 
 }
 
