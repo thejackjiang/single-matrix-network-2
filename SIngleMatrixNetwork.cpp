@@ -8,16 +8,35 @@
 
 int main(int argc, char* argv[])
 {
+	Network jack(1, 2, 2, "jacktest.txt");
+
+	int i = 0;
 	double input[6];
-	int i;
+	while (i < 1000) {
+
+
+		input[0] = 0.0;			// Set all inputs off
+		if (i > 300 && i < 700)	input[0] = 1.0;		// Command jaw close 
+		if (i > 600 && i < 800) input[0] = 1.0;		// command LEFT jaw open
+		if (i > 650 && i < 850) input[0] = 1.0;		// command RIGHT jaw open
+		jack.setNetworkInput(input);
+
+		jack.cycleNetwork();
+		jack.printNetworkOutputState();
+
+		jack.writeNetworkOutputStateToFile("jacktest.txt");
+	}
+		
+	//double input[6];
+	//int i;
 	//int j;
 
 //	Network ted(3,10,2,"blank_network.txt");
 
 //	Network fred;
-	Network fred("antJaw_05.txt");
+	//Network fred("antJaw_05.txt");
 
-	fred.PrintNetworkState();
+	//fred.PrintNetworkState();
 
 
 	// Initialize the weights to produce a test recurrent network
@@ -35,7 +54,7 @@ int main(int argc, char* argv[])
 	fred.setNetworkWeightsDiagonalRange(1,0,8);
 */
 
-	fred.writeNetworkOutputStateToFile( "testOutput10.txt" );
+	/*fred.writeNetworkOutputStateToFile( "testOutput10.txt" );
 
 	i = 0;
 	while( i < 1000 ){
@@ -60,25 +79,22 @@ int main(int argc, char* argv[])
 		}
 		//---------------------------------------------------------------------
 */
-		fred.setNetworkInput( input );
+/*		jack.setNetworkInput( input );
 
-		fred.cycleNetwork();
+		jack.cycleNetwork();
+		jack.printNetworkOutputState( );
 
-//		fred.cycleNetworkNormalizeHebbianLearning();
-
-//		fred.printNetworkOuput();
-		fred.printNetworkOutputState( );
-
-		fred.writeNetworkOutputStateToFile( "testOutput10.txt" );
+		jack.writeNetworkOutputStateToFile( "jacktest.txt" );
 
 //		fred.writeNetworkToFile("test.txt");
 	//	fred.writeNetworkWeightsToFile("weights.txt");
-		++i;
-	}
+	//	++i;
+	//}
 
 	//Test the read-write fucntions -------------
 //	fred.writeNetworkToFile("temp.txt");
 //	fred.readNetworkFromFile("temp.txt");
-
+*/
 	return 0;
+
 }
